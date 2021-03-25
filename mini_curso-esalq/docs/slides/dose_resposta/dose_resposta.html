@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Dose resposta</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Maxwel Coura Oliveira, PhD   Weed Scientist      maxwelco     @maxwelco    maxweeds.rbind.io    maxwelco@gmail.com " />
+    <script src="libs/header-attrs-2.7/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/shareon-1.4.1/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon-1.4.1/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain-0.2.4/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain-0.2.4/shareagain.js"></script>
+    <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+    <script src="libs/jquery-3.5.1/jquery.min.js"></script>
+    <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="libs/datatables-binding-0.17.2/datatables.js"></script>
+    <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+    <link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+    <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+    <link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown-0.3.5/countdown.js"></script>
+    <script src="https://use.fontawesome.com/5235085b15.js"></script>
+    <link rel="stylesheet" href="assets/css/my-theme.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/my-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+
+class: inverse, title-slide, center
+background-image: url(img/ilyass-seddoug-c4lXkCHuaXY-unsplash.jpg)
+background-size: cover
+
+# Dose resposta
+#### Análise estatística para a ciência da planta daninha
+
+### Maxwel Coura Oliveira, PhD &lt;br&gt; Weed Scientist &lt;br&gt;&lt;br&gt; &lt;a href="https://github.com/maxwelco"&gt;&lt;i class="fa fa-github fa-fw"&gt;&lt;/i&gt;&amp;nbsp; maxwelco&lt;/a&gt;&lt;br&gt; &lt;a href="https://twitter.com/maxwelco"&gt; &lt;i class="fa fa-twitter fa-fw"&gt;&lt;/i&gt;&amp;nbsp; @maxwelco&lt;/a&gt;&lt;br&gt; &lt;a href="https://maxweeds.rbind.io"&gt;&lt;i class="fa fa-link fa-fw"&gt;&lt;/i&gt;&amp;nbsp; maxweeds.rbind.io&lt;/a&gt;&lt;br&gt; &lt;a href="mailto:maxwelco@gmail.com"&gt;&lt;i class="fa fa-paper-plane fa-fw"&gt;&lt;/i&gt;&amp;nbsp; maxwelco@gmail.com&lt;/a&gt;&lt;br&gt;
+
+.footnote[
+
+]
+
+
+---
+
+
+
+
+# Curvas
+
+&lt;img src="images/curves.png" width="500" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: middle left
+background-image: url(https://upload.wikimedia.org/wikipedia/commons/2/25/Aureolus_Theophrastus_Bombastus_von_Hohenheim_%28Paracelsus%29._Wellcome_V0004455.jpg)
+background-position: right
+background-size: contain
+
+# Dose
+
+.blockquote[
+"Todas as coisas são venenosas e não são &lt;br&gt; venenosas; apenas a dose torna uma coisa &lt;br&gt; não um venenosa" — Paracelsus (1494 - 1541)
+]
+
+
+.footnote[Fonte: Wikipedia]
+
+
+
+
+---
+
+# Dose resposta
+
+
+
+&lt;img src="images/dose.png" width="700" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+# Dose resposta no R
+
+- Pacote `drc`
+
+
+```r
+#install.packages("drc")
+library(drc)
+```
+
+- Clique aqui para baixar o CRAN: [Package drc](https://cran.r-project.org/web/packages/drc/drc.pdf)
+
+- Principais tipos de análises
+
+    - Dose resposta de herbicidas
+    
+    - Emergeência de plantas daninhas
+    
+    - Período crítico de competição de plantas daninhas
+
+---
+
+# Dados
+
+- Dose resposta de um estudo investigando resistência à herbicidas
+
+    - 2 biótipos
+    
+    - 10 doses de mesotrione
+    
+- Parte dos dados apresentados em Oliveira et al. 2018, [Inheritance of Mesotrione Resistance in an Amaranthus tuberculatus (var. rudis) Population from Nebraska, USA](https://www.frontiersin.org/articles/10.3389/fpls.2018.00060/full)
+
+&lt;img src="https://pbs.twimg.com/media/C8s5HIPUwAAjGxW.jpg:large" width="250" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Dados
+
+
+
+
+<div id="htmlwidget-0a24bde412fc4c249a27" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0a24bde412fc4c249a27">{"x":{"filter":"none","fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10"],["R","R","R","R","R","R","R","R","R","R"],["I","I","I","I","I","I","I","I","I","I"],[1,2,3,4,1,2,3,4,1,2],[0,0,0,0,13.125,13.125,13.125,13.125,26.25,26.25],[0,0,0,0,5,5,10,10,15,10],[0.58,0.54,0.41,0.5,0.5,0.64,0.47,0.72,0.52,0.54]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>biotype<\/th>\n      <th>run<\/th>\n      <th>rep<\/th>\n      <th>rate<\/th>\n      <th>control<\/th>\n      <th>biomass<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+# Manipulação de dados
+
+- Muitas vezes precisamos ajustar os dados antes de iniciar a análise estatística
+
+
+.pull-left[
+![](https://media.giphy.com/media/fxIk8gAC4fHir5s8Su/giphy.gif)
+]
+
+--
+
+.pull-right[
+&lt;img src="https://englelab.gatech.edu/useRguide/images/dplyr_logo.png" width="300" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Visualização
+
+
+&gt; "O gráfico simples trouxe mais informações à mente do analista de dados do que qualquer outro dispositivo." John Tukey
+
+&lt;img src="https://media.giphy.com/media/3oKIPEqDGUULpEU0aQ/giphy.gif" width="500" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Modelo
+
+- Qual modelo escolher? Existem vários
+
+&lt;img src="https://media.giphy.com/media/l1IYkN1bTv8jAAM48/giphy.gif" width="500" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Modelo
+
+- **Por exemplo**: log-logistico de 4 parâmetro
+
+
+`$$Y = c + \frac{d - c} {1 + exp[b(log x - log e)]}$$`
+&lt;br&gt;
+
+--
+
+
+| **Parâmetro** | Significado                |
+|:---------------:|:----------------------------:|
+| b             | inclinação                 |
+| c             | limite inferior            |
+| d             | limite superior            |
+| e             | ponto de infecção da curva |
+
+
+.footnote[Knezevic et al. (2007)]
+
+---
+
+
+
+## Sua vez
+
+- Você vai trabalhar com os dados de biomassa
+
+- Vá em exercícios --&gt; Dose resposta e faça do número **1 ao 3**.
+
+&lt;img src="https://media.giphy.com/media/p4sRGwWBaWGAfBJNos/giphy.gif" width="400" style="display: block; margin: auto;" /&gt;
+
+
+<div class="countdown" id="timer_605c782c" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+
+
+
+---
+
+# Interpretando os parâmetros
+
+
+.pull-left[ 
+- Dose efetiva (`ED`): relativa e absoluta
+
+```python
+ED()
+```
+
+- Como comparar as doses efetivas?
+
+```python
+EDcomp
+```
+
+
+]
+
+
+.pull-right[
+
+
+
+&lt;img src="dose_resposta_files/figure-html/unnamed-chunk-13-1.png" width="500" height="500" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Sua vez
+
+- Você vai trabalhar com os dados de biomassa
+
+- Vá em exercícios --&gt; Dose resposta e faça do número **4 ao 5**.
+
+&lt;img src="https://media.giphy.com/media/AEHPS520DUgJF8wnon/giphy.gif" style="display: block; margin: auto;" /&gt;
+
+
+<div class="countdown" id="timer_605c7a63" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+
+---
+
+# Figura
+
+
+
+
+&lt;img src="dose_resposta_files/figure-html/unnamed-chunk-17-1.png" width="500" height="500" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+# Sua vez
+
+- Você vai trabalhar com os dados de biomassa
+
+- Vá em exercícios --&gt; Dose resposta e faça do número **6**.
+
+&lt;img src="https://media.giphy.com/media/55iWgRJB09fCy609aM/giphy.gif" style="display: block; margin: auto;" /&gt;
+
+
+<div class="countdown" id="timer_605c7894" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+
+name: goodbye
+class: right, middle, blue
+
+
+&lt;img style="border-radius: 50%;" src="https://maxweeds.rbind.io/author/avatar_hu907a749d428662ca99fbd9a7b3ed6b04_596633_270x270_fill_q90_lanczos_center.jpg" width="150px"/&gt;
+
+# Obrigado!
+
+
+
+Maxwel Coura Oliveira
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>\n",
+"highlightStyle": "solarized-light",
+"highlightLanguage": ["r", "css", "yaml"],
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

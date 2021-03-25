@@ -1,0 +1,385 @@
+---
+title: "Dose resposta"
+subtitle: "Análise estatística para a ciência da planta daninha"
+author: 'Maxwel Coura Oliveira, PhD <br> Weed Scientist <br><br> <a href="https://github.com/maxwelco"><i class="fa fa-github fa-fw"></i>&nbsp; maxwelco</a><br> <a href="https://twitter.com/maxwelco"> <i class="fa fa-twitter fa-fw"></i>&nbsp; @maxwelco</a><br> <a href="https://maxweeds.rbind.io"><i class="fa fa-link fa-fw"></i>&nbsp; maxweeds.rbind.io</a><br> <a href="mailto:maxwelco@gmail.com"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; maxwelco@gmail.com</a><br>'
+output:
+  xaringan::moon_reader:
+    css: ["default", "assets/css/my-theme.css", "assets/css/my-fonts.css"]
+    seal: false 
+    lib_dir: libs
+    nature:
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+      highlightStyle: solarized-light
+      highlightLanguage: ["r", "css", "yaml"]
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: "https://platform.twitter.com/widgets.js"
+    includes:
+      in_header: header.html
+
+---
+
+```{r setup, include=FALSE}
+library(countdown)
+
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center')
+```
+
+```{r meta, eval=FALSE, include=FALSE}
+library(metathis)
+meta() %>%
+  meta_general(
+    description = "Mini curso R - ESALQ",
+    generator = "xaringan and remark.js"
+  ) %>% 
+  meta_name("github-repo" = "https://github.com/maxwelco/workshop-esalq") %>% 
+  meta_social(
+    title = "Mini curso R - ESALQ / ANOVA",
+#    url = "https://alison.netlify.app/latinr-learn",
+#    image = "https://alison.netlify.app/latinr-learn/images/web.jpg",
+    image_alt = "A spiderweb from rawpixel",
+    og_type = "website",
+    twitter_card_type = "summary_large_image"
+  )
+```
+
+
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+```
+
+class: inverse, title-slide, center
+background-image: url(img/ilyass-seddoug-c4lXkCHuaXY-unsplash.jpg)
+background-size: cover
+
+# `r rmarkdown::metadata$title`
+#### `r rmarkdown::metadata$subtitle`
+
+### `r rmarkdown::metadata$author`
+
+.footnote[
+
+]
+
+
+---
+
+
+
+
+# Curvas
+
+```{r echo=FALSE, out.width=500}
+knitr::include_graphics("images/curves.png")
+```
+
+---
+
+class: middle left
+background-image: url(https://upload.wikimedia.org/wikipedia/commons/2/25/Aureolus_Theophrastus_Bombastus_von_Hohenheim_%28Paracelsus%29._Wellcome_V0004455.jpg)
+background-position: right
+background-size: contain
+
+# Dose
+
+.blockquote[
+"Todas as coisas são venenosas e não são <br> venenosas; apenas a dose torna uma coisa <br> não um venenosa" — Paracelsus (1494 - 1541)
+]
+
+
+.footnote[Fonte: Wikipedia]
+
+
+
+
+---
+
+# Dose resposta
+
+
+
+```{r echo=FALSE, out.width=700}
+knitr::include_graphics("images/dose.png")
+```
+
+
+
+---
+
+# Dose resposta no R
+
+- Pacote `drc`
+
+```{r}
+#install.packages("drc")
+library(drc)
+```
+
+- Clique aqui para baixar o CRAN: [Package drc](https://cran.r-project.org/web/packages/drc/drc.pdf)
+
+- Principais tipos de análises
+
+    - Dose resposta de herbicidas
+    
+    - Emergeência de plantas daninhas
+    
+    - Período crítico de competição de plantas daninhas
+
+---
+
+# Dados
+
+- Dose resposta de um estudo investigando resistência à herbicidas
+
+    - 2 biótipos
+    
+    - 10 doses de mesotrione
+    
+- Parte dos dados apresentados em Oliveira et al. 2018, [Inheritance of Mesotrione Resistance in an Amaranthus tuberculatus (var. rudis) Population from Nebraska, USA](https://www.frontiersin.org/articles/10.3389/fpls.2018.00060/full)
+
+```{r echo=FALSE, out.width=250}
+knitr::include_graphics("https://pbs.twimg.com/media/C8s5HIPUwAAjGxW.jpg:large")
+```
+
+---
+
+# Dados
+
+```{r include=FALSE}
+library(RCurl)
+library(tidyverse)
+df_path <- getURL("https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/dose_resposta.csv")
+
+# Lendo via read_csv
+dose <- read_csv(df_path)
+```
+
+
+```{r echo=FALSE}
+DT::datatable(
+  head(dose, 10),
+  fillContainer = FALSE, options = list(pageLength = 8)
+)
+```
+
+---
+
+# Manipulação de dados
+
+- Muitas vezes precisamos ajustar os dados antes de iniciar a análise estatística
+
+
+.pull-left[
+![](https://media.giphy.com/media/fxIk8gAC4fHir5s8Su/giphy.gif)
+]
+
+--
+
+.pull-right[
+```{r echo=FALSE, out.width=300, fig.align='center'}
+knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dplyr_logo.png")
+```
+]
+
+---
+
+# Visualização
+
+
+> "O gráfico simples trouxe mais informações à mente do analista de dados do que qualquer outro dispositivo." John Tukey
+
+```{r echo = FALSE, out.width=500, fig.align='center'}
+knitr::include_graphics("https://media.giphy.com/media/3oKIPEqDGUULpEU0aQ/giphy.gif")
+```
+
+
+---
+
+# Modelo
+
+- Qual modelo escolher? Existem vários
+
+```{r echo = FALSE, out.width=500, fig.align='center'}
+knitr::include_graphics("https://media.giphy.com/media/l1IYkN1bTv8jAAM48/giphy.gif")
+```
+
+---
+
+# Modelo
+
+- **Por exemplo**: log-logistico de 4 parâmetro
+
+
+$$Y = c + \frac{d - c} {1 + exp[b(log x - log e)]}$$
+<br>
+
+--
+
+
+| **Parâmetro** | Significado                |
+|:---------------:|:----------------------------:|
+| b             | inclinação                 |
+| c             | limite inferior            |
+| d             | limite superior            |
+| e             | ponto de infecção da curva |
+
+
+.footnote[Knezevic et al. (2007)]
+
+---
+
+
+
+## Sua vez
+
+- Você vai trabalhar com os dados de biomassa
+
+- Vá em exercícios --> Dose resposta e faça do número **1 ao 3**.
+
+```{r echo=FALSE, out.width=400}
+knitr::include_graphics("https://media.giphy.com/media/p4sRGwWBaWGAfBJNos/giphy.gif")
+```
+
+
+```{r echo =FALSE}
+countdown(minutes = 3, seconds = 00)
+```
+
+
+
+
+---
+
+# Interpretando os parâmetros
+
+
+.pull-left[ 
+- Dose efetiva (`ED`): relativa e absoluta
+
+```python
+ED()
+```
+
+- Como comparar as doses efetivas?
+
+```python
+EDcomp
+```
+
+
+]
+
+
+.pull-right[
+
+```{r include=FALSE}
+model <- drm(control ~ # variável resposta
+               rate, # variável explanatória
+             biotype, # fatores
+             fct = l4(), # curva usada (existem várias)
+             data = dose) # onde estão os dados
+```
+
+```{r echo=FALSE, fig.align='center', out.height=500, out.width=500}
+plot(model, legendPos = c(3, 95))
+```
+]
+
+---
+
+# Sua vez
+
+- Você vai trabalhar com os dados de biomassa
+
+- Vá em exercícios --> Dose resposta e faça do número **4 ao 5**.
+
+```{r echo=FALSE}
+knitr::include_graphics("https://media.giphy.com/media/AEHPS520DUgJF8wnon/giphy.gif")
+```
+
+
+```{r echo =FALSE}
+countdown(minutes = 3, seconds = 00)
+```
+
+
+---
+
+# Figura
+
+```{r include=FALSE}
+# gerar uma novo dataset
+nd <- expand.grid(rate=exp(seq(log(0.5), log(1680), length=1680)),
+                       biotype = c("S", "R"))
+
+# predict the model
+pm <- predict(model, newdata=nd, interval="confidence")
+
+# predict intervalo de confiança
+nd$p <- pm[,1] 
+nd$pmin <- pm[,2] 
+nd$pmax <- pm[,3] 
+
+# ajustando o 0
+dose$rate0 <- dose$rate
+dose$rate0[dose$rate==0] <- 0.5
+```
+
+
+```{r echo = FALSE, out.height=500, out.width=500}
+ggplot(dose, aes(x = rate, y = control, 
+                 color = biotype,
+                 fill = biotype)) + 
+  geom_line(data=nd, aes(x=rate, y=p, 
+                         linetype = biotype), 
+            size=1.3) +
+  geom_ribbon(data=nd, aes(x=rate, y=p, ymin=pmin, ymax=pmax, 
+                           color = NULL),
+              alpha=0.2) +
+  theme_bw() +
+  coord_trans(x="log") +
+  scale_x_continuous(breaks=c(0, 1, 5, 12, 26, 53, 105, 
+                              210, 420, 840, 1680))
+```
+
+
+---
+
+
+# Sua vez
+
+- Você vai trabalhar com os dados de biomassa
+
+- Vá em exercícios --> Dose resposta e faça do número **6**.
+
+```{r echo=FALSE}
+knitr::include_graphics("https://media.giphy.com/media/55iWgRJB09fCy609aM/giphy.gif")
+```
+
+
+```{r echo =FALSE}
+countdown(minutes = 3, seconds = 00)
+```
+
+---
+
+
+name: goodbye
+class: right, middle, blue
+
+
+<img style="border-radius: 50%;" src="https://maxweeds.rbind.io/author/avatar_hu907a749d428662ca99fbd9a7b3ed6b04_596633_270x270_fill_q90_lanczos_center.jpg" width="150px"/>
+
+# Obrigado!
+
+
+
+Maxwel Coura Oliveira

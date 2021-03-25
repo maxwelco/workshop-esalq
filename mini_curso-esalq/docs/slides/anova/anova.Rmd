@@ -1,0 +1,436 @@
+---
+title: "ANOVA"
+subtitle: "Análise estatística para a ciência da planta daninha"
+author: 'Maxwel Coura Oliveira, PhD <br> Weed Scientist <br><br> <a href="https://github.com/maxwelco"><i class="fa fa-github fa-fw"></i>&nbsp; maxwelco</a><br> <a href="https://twitter.com/maxwelco"> <i class="fa fa-twitter fa-fw"></i>&nbsp; @maxwelco</a><br> <a href="https://maxweeds.rbind.io"><i class="fa fa-link fa-fw"></i>&nbsp; maxweeds.rbind.io</a><br> <a href="mailto:maxwelco@gmail.com"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; maxwelco@gmail.com</a><br>'
+output:
+  xaringan::moon_reader:
+    css: ["default", "assets/css/my-theme.css", "assets/css/my-fonts.css"]
+    seal: false 
+    lib_dir: libs
+    nature:
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+      highlightStyle: solarized-light
+      highlightLanguage: ["r", "css", "yaml"]
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: "https://platform.twitter.com/widgets.js"
+    includes:
+      in_header: header.html
+
+---
+
+```{r setup, include=FALSE}
+library(countdown)
+
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center')
+```
+
+```{r meta, eval=FALSE, include=FALSE}
+library(metathis)
+meta() %>%
+  meta_general(
+    description = "Mini curso R - ESALQ",
+    generator = "xaringan and remark.js"
+  ) %>% 
+  meta_name("github-repo" = "https://github.com/maxwelco/workshop-esalq") %>% 
+  meta_social(
+    title = "Mini curso R - ESALQ / ANOVA",
+#    url = "https://alison.netlify.app/latinr-learn",
+#    image = "https://alison.netlify.app/latinr-learn/images/web.jpg",
+    image_alt = "A spiderweb from rawpixel",
+    og_type = "website",
+    twitter_card_type = "summary_large_image"
+  )
+```
+
+
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+```
+
+class: inverse, title-slide, center
+background-image: url(img/ilyass-seddoug-c4lXkCHuaXY-unsplash.jpg)
+background-size: cover
+
+# `r rmarkdown::metadata$title`
+#### `r rmarkdown::metadata$subtitle`
+
+### `r rmarkdown::metadata$author`
+
+.footnote[
+
+]
+
+    
+---
+
+background-image: url(https://upload.wikimedia.org/wikipedia/commons/a/aa/Youngronaldfisher2.JPG)
+background-position: right
+background-size: contain
+
+# Análise de variância
+
+--
+
+1) ANOVA
+
+--
+
+2) Usado para analisar as diferenças entre as médias <br> dos grupos em uma amostra
+
+--
+
+
+
+.footnote[Fonte: Wikipedia]
+
+
+---
+
+# Análise de variância
+
+
+```{r echo=FALSE, out.width=900}
+knitr::include_graphics("images/map1.png")
+```
+
+---
+
+# Modelos mistos
+
+
+- "Um modelo misto, modelo de efeitos mistos ou modelo de componente de erro misto é um modelo estatístico que contém efeitos fixos e efeitos aleatórios"
+
+    - **Efeitos fixos**: tratamento aplicado
+
+    - **Efeitos aleatórios**: repetição, bloco, ano, mês, animal
+
+
+---
+
+class: middle right
+background-image: url(images/crop.jpg)
+background-position: left
+background-size: contain
+
+# Dados
+
+--
+
+1) PRE-emergência
+
+--
+
+2) waterhemp (*Amaranthus tuberculatus*)
+
+--
+
+3) Estudo de campo em dois anos no cultivo de milho
+
+--
+
+.footnote[Oliveira et al. 2017]
+
+---
+
+# Dados
+
+```{r include=FALSE}
+library(RCurl)
+library(tidyverse)
+df_path <- getURL("https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/residual.csv")
+
+# Lendo via read_csv
+residual <- read_csv(df_path)
+```
+
+```{r echo=FALSE}
+DT::datatable(
+  head(residual, 10),
+  fillContainer = FALSE, options = list(pageLength = 8)
+)
+```
+
+
+
+---
+
+# Manipulação de dados
+
+
+```{r echo=FALSE, out.width=900}
+knitr::include_graphics("images/map2.png")
+```
+
+---
+
+# Manipulação de dados
+
+- Muitas vezes precisamos ajustar os dados antes de iniciar a análise estatística
+
+
+.pull-left[
+![](https://media.giphy.com/media/lVBtp4SRW6rvDHf1b6/giphy.gif)
+]
+
+--
+
+.pull-right[
+```{r echo=FALSE, out.width=300, fig.align='center'}
+knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dplyr_logo.png")
+```
+
+
+]
+
+
+
+
+---
+
+# Visualização
+
+
+> "O gráfico simples trouxe mais informações à mente do analista de dados do que qualquer outro dispositivo." John Tukey
+
+```{r echo = FALSE, out.width=500, fig.align='center'}
+knitr::include_graphics("https://media.giphy.com/media/3oKIPEqDGUULpEU0aQ/giphy.gif")
+```
+
+---
+
+## Sua vez
+
+- Você vai trabalhar com os dados de controle de plantas daninhas em pós emergência
+
+- Vá em exercícios --> ANOVA e faça do número **1**.
+
+```{r echo=FALSE, out.width=400}
+knitr::include_graphics("https://media.giphy.com/media/12XDYvMJNcmLgQ/giphy.gif")
+```
+
+
+```{r echo =FALSE}
+countdown(minutes = 1, seconds = 00)
+```
+
+---
+
+# Revisão
+
+- Pense em **y_** como uma variável de resposta e trt como tratamentos
+
+- Com base no que aprendemos sobre a escala correta (dica: proporções) para uma variável de resposta para nossa análise de dados
+
+
+| trt 	| rep 	| y_1 	| y_2  	| y_3  	| y_4  	|
+|-----	|-----	|-----	|------	|------	|------	|
+| A   	| 1   	| 5   	| 0.05 	| 5    	| 0.05 	|
+| B   	| 2   	| 20  	| 0.20 	| 0.20 	| 20   	|
+| C   	| 3   	| 50  	| 0.50 	| 50   	| 0.50 	|
+| D   	| 4   	| 40  	| 0.40 	| 40   	| 0.40 	|
+
+
+- Qual dessas colunas de variáveis de resposta tem **y_** em uma escala correta?
+
+---
+
+# Hipótese
+
+
+```{r echo=FALSE, out.width=900}
+knitr::include_graphics("images/map3.png")
+```
+
+---
+
+
+# Hipótese
+
+
+**H0:** os herbicidas têm o mesmo desempenho no controle de planta daninha
+
+vs
+
+**HA:** herbicidas têm desempenho diferente no controle de planta daninha
+
+
+.pull-left[
+```{r echo=FALSE, out.width=400}
+knitr::include_graphics("images/herb_A.png")
+```
+
+]
+
+.pull-right[
+```{r echo=FALSE, out.width=400}
+knitr::include_graphics("images/herb_B.png")
+```
+
+
+]
+
+
+---
+
+# Premissas da ANOVA
+
+.pull-left[
+- Independência
+
+- Distribuição normal (gaussiana)
+
+- Homogeneidade da variância
+]
+
+.pull-right[
+![](https://media.giphy.com/media/3orifaGGghuf3hnmsE/giphy.gif)
+]
+
+
+
+---
+
+# Modelo
+
+- Generalized linear mixed models (GLMMs) and extensions, built on Template Model Builder
+
+- Gaussiano, Poisson, binomial, binomial negativo, **Beta** etc
+
+```{r}
+#install.packages("glmmTMB", type="source")
+library(glmmTMB)
+```
+
+- Beta: não é possível lidar com os valores 0 (0%) e 1 (100%)
+
+- ANOVA
+
+---
+
+# Sua vez
+
+- Você vai trabalhar com os dados de controle de plantas daninhas em pós emergência
+
+- Vá em exercícios --> ANOVA e faça do número **2, 3 e 4**.
+
+```{r echo=FALSE, out.width=400}
+knitr::include_graphics("https://media.giphy.com/media/yoJC2K6rCzwNY2EngA/giphy.gif")
+```
+
+
+```{r echo =FALSE}
+countdown(minutes = 3, seconds = 00)
+```
+
+---
+
+# Pós ANOVA
+
+
+```{r echo=FALSE, out.width=900}
+knitr::include_graphics("images/map4.png")
+```
+
+---
+
+# Pós ANOVA
+
+- Depende dos resultados da ANOVA
+
+- Usamos o pacote `emmeans` para estimar as médias marginais
+
+```{r}
+#install.packages("glmmTMB", type="source")
+library(glmmTMB)
+```
+
+- Usamos o pacote `multicomp` para estimar as diferenças dos tratamentos com letras
+
+```{r}
+#install.packages("multcomp")
+library(multcomp)
+```
+
+---
+
+
+# Sua vez
+
+- Você vai trabalhar com os dados de controle de plantas daninhas em pós emergência
+
+- Vá em exercícios --> ANOVA e faça do número **5, 6, 7 e 8**.
+
+```{r echo=FALSE, out.width=400}
+knitr::include_graphics("https://media.giphy.com/media/3oKIP8C4lSWT47ZBHW/giphy.gif")
+```
+
+
+```{r echo =FALSE}
+countdown(minutes = 5, seconds = 00)
+```
+
+
+---
+
+# Apresentação dos resultados
+
+```{r echo=FALSE, out.width=900}
+knitr::include_graphics("images/map5.png")
+```
+
+---
+
+# Apresentação dos resultados
+
+.pull-left[
+- Gráfico
+
+- Tabela
+]
+
+
+.pull-right[
+```{r echo = FALSE, out.width= 700}
+knitr::include_graphics("https://media.giphy.com/media/g9wbFB61YEh1u/giphy.gif")
+```
+]
+
+---
+
+# Sua vez
+
+- Você vai trabalhar com os dados de controle de plantas daninhas em pós emergência
+
+- Vá em exercícios --> ANOVA e faça do número **9 e 10**.
+
+```{r echo=FALSE, out.width=400}
+knitr::include_graphics("https://media.giphy.com/media/oGO1MPNUVbbk4/giphy.gif")
+```
+
+
+```{r echo =FALSE}
+countdown(minutes = 2, seconds = 00)
+```
+
+---
+
+name: goodbye
+class: right, middle, blue
+
+
+<img style="border-radius: 50%;" src="https://maxweeds.rbind.io/author/avatar_hu907a749d428662ca99fbd9a7b3ed6b04_596633_270x270_fill_q90_lanczos_center.jpg" width="150px"/>
+
+# Obrigado!
+
+
+
+Maxwel Coura Oliveira

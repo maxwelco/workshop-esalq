@@ -1,0 +1,147 @@
+---
+title: "Introdução ao R/Rstudio"
+subtitle: "Breve introdução sobre o programa R/Rstudio"
+author: 'Maxwel Coura Oliveira, PhD <br> Weed Scientist <br><br> <a href="https://github.com/maxwelco"><i class="fa fa-github fa-fw"></i>&nbsp; maxwelco</a><br> <a href="https://twitter.com/maxwelco"> <i class="fa fa-twitter fa-fw"></i>&nbsp; @maxwelco</a><br> <a href="https://maxweeds.rbind.io"><i class="fa fa-link fa-fw"></i>&nbsp; maxweeds.rbind.io</a><br> <a href="mailto:maxwelco@gmail.com"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; maxwelco@gmail.com</a><br>'
+output:
+  xaringan::moon_reader:
+    css: ["default", "assets/css/my-theme.css", "assets/css/my-fonts.css"]
+    seal: false 
+    lib_dir: libs
+    nature:
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+      highlightStyle: solarized-light
+      highlightLanguage: ["r", "css", "yaml"]
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: "https://platform.twitter.com/widgets.js"
+    includes:
+      in_header: header.html
+
+---
+
+```{r setup, include=FALSE}
+library(countdown)
+
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center')
+```
+
+```{r meta, eval=FALSE, include=FALSE}
+library(metathis)
+meta() %>%
+  meta_general(
+    description = "Rathamsted interview",
+    generator = "xaringan and remark.js"
+  ) %>% 
+  meta_name("github-repo" = "maxwelco/talk") %>% 
+  meta_social(
+    title = "Knowing Maxwel Coura Oliveira",
+#    url = "https://alison.netlify.app/latinr-learn",
+#    image = "https://alison.netlify.app/latinr-learn/images/web.jpg",
+    image_alt = "A spiderweb from rawpixel",
+    og_type = "website",
+    twitter_card_type = "summary_large_image"
+  )
+```
+
+
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+```
+
+class: inverse, title-slide, center
+background-image: url(img/ilyass-seddoug-c4lXkCHuaXY-unsplash.jpg)
+background-size: cover
+
+# `r rmarkdown::metadata$title`
+#### `r rmarkdown::metadata$subtitle`
+
+### `r rmarkdown::metadata$author`
+
+.footnote[
+
+]
+
+
+---
+
+
+## R e Rstudio
+
+<br><br>
+
+```{r echo=FALSE}
+knitr::include_graphics("https://community-cdn.rstudio.com/uploads/default/original/2X/9/95d95f5512a943c89520544e0a47d9c641b7333f.png")
+```
+
+---
+
+# Ambiente Rstudio
+
+```{r echo = FALSE, out.width=550}
+knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/692f3658d35df168276cf46e3e083f908a5cc105/f7707/wp-content/uploads/2014/04/rstudio-windows.png")
+```
+
+.footnote[Fonte: Rstudio]
+
+
+---
+
+# R markdown
+
+
+```{r echo = FALSE}
+knitr::include_graphics("images/rmarkdown.svg")
+```
+
+.footnote[Fonte: Rstudio Education]
+
+---
+
+# Documento Rmarkdown
+
+
+```{r echo = FALSE, out.width=700}
+knitr::include_graphics("https://miro.medium.com/max/2000/1*jL-whKGBhuUlU7Q2oevz9w.png")
+```
+
+
+.footnote[Fonte: Medium]
+
+---
+
+
+# Dados
+
+- Como formatar dados
+
+```{r echo=FALSE}
+DT::datatable(
+  drc::germination,
+  fillContainer = FALSE, options = list(pageLength = 5)
+)
+```
+
+
+
+
+---
+
+name: goodbye
+class: right, middle, blue
+
+
+<img style="border-radius: 50%;" src="https://maxweeds.rbind.io/author/avatar_hu907a749d428662ca99fbd9a7b3ed6b04_596633_270x270_fill_q90_lanczos_center.jpg" width="150px"/>
+
+# Obrigado!
+
+
+
+Maxwel Coura Oliveira
