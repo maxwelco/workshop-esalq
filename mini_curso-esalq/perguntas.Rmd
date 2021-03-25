@@ -1,12 +1,9 @@
 ---
 title: "Perguntas e respostas (P&R)"
-output:
-  html_document:
-    df_print: paged
+description: |
+  As perguntas com mais detalhes deve ser feita via google doc.
 ---
 
-
-Esse link leva a você ao google doc para perguntas e respostas:
 
 
 <iframe width='1000px' height='1000px' src='https://docs.google.com/document/d/14a9SgW509v-1mRIW0L8cu6aUjk951la9WhZoXguUfm0/edit?usp=sharing' >

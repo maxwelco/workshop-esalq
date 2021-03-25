@@ -1,8 +1,7 @@
 ---
 title: "Código de conduta"
-output:
-  html_document:
-    df_print: paged
+description: |
+  Código de conduta para manter o ambiente saudável e maximizar o aprendizado.
 ---
 
 ##  Mini-curso[^1] 
