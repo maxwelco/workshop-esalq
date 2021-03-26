@@ -1,5 +1,5 @@
 name: "esalq workshop"
-title: "Mini-curso R para a ciência da planta daninha - ESALQ"
+title: "Mini-curso R para a ciência da planta daninha - ESALQ" 
 description: |
   esalq-workshop
 output_dir: "docs"
