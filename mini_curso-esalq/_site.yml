@@ -17,7 +17,7 @@ navbar:
     href: https://www.openweedsci.org
   search: false
   right:
-    - text: "Home"
+    - text: "Inicio"
       href: index.html
     - text: "Sobre"
       href: about.html

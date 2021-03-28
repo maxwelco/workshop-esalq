@@ -163,6 +163,11 @@ modelo <- glmmTMB(control_prop ~ # variável resposta
                   data = residual3)
 ```
 
+### Efeitos randomizados
+
+![](images/random.jpeg)
+
+
 ## Anova
 
 ```{r}

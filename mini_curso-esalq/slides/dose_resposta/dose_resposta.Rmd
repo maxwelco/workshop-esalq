@@ -98,7 +98,13 @@ background-size: contain
 .footnote[Fonte: Wikipedia]
 
 
+---
 
+# Dose resposta
+
+```{r echo=FALSE, out.width=700}
+knitr::include_graphics("images/concept_model.png")
+```
 
 ---
 
@@ -110,7 +116,7 @@ background-size: contain
 knitr::include_graphics("images/dose.png")
 ```
 
-
+.footnote[Keshtkar et al. (2021)]
 
 ---
 
