@@ -1,7 +1,7 @@
 ---
 title: "Perguntas e respostas (P&R)"
 description: |
-  As perguntas com mais detalhes deve ser feita via google doc.
+  As perguntas com mais detalhes devem ser feitas via google doc.
 ---
 
 
