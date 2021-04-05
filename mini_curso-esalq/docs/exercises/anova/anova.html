@@ -196,7 +196,7 @@ library(emmeans)
 library(multcomp)</code></pre>
 <p>Execute o bloco de código abaixo para importar os dados.</p>
 <pre class="r"><code># Baixando via GitHub
-df_path &lt;- getURL(&quot;https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/controle.csv&quot;)
+df_path &lt;- url(&quot;https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/controle.csv&quot;)
 
 # Importando via read_csv
 controle &lt;- read_csv(df_path) %&gt;% 

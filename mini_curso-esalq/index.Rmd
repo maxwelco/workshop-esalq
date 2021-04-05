@@ -27,8 +27,14 @@ Dia 30/03/2021 das 14 às 17h via Zoom.
 |----------------	|---------------	|
 | 14:00 às 14:15 	| Apresentação  	|
 | 14:15 às 14:30 	| Introdução    	|
-| 14:30 às 15:45 	| ANOVA         	|
-| 15:45 às 17:00 	| Dose resposta 	|
+| 14:30 às 17:00 	| ANOVA         	|
+
+Dia 06/04/2021 das 14 às 17h via Zoom.
+
+| Horário        	| Curso         	|
+|----------------	|---------------	|
+| 14:00 às 17:00   	| Dose resposta  	|
+
 * Intervalos programados durante o período
 
 

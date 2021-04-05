@@ -272,7 +272,7 @@ pre code {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>options(scipen<span class="op">=</span>TRUE)</span></code></pre></div>
 <p>Execute o bloco de código abaixo para importar os dados.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixando via GitHub</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_path <span class="op">&lt;-</span> getURL(<span class="st">&quot;https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/dose_resposta.csv&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_path <span class="op">&lt;-</span> url(<span class="st">&quot;https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/dose_resposta.csv&quot;</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lendo via read_csv</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dose <span class="op">&lt;-</span> read_csv(df_path)</span>

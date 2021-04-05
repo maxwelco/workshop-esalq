@@ -33,7 +33,7 @@ Execute o bloco de código abaixo para importar os dados.
 
 ```{r}
 # Baixando via GitHub
-df_path <- getURL("https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/controle.csv")
+df_path <- url("https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/controle.csv")
 
 # Importando via read_csv
 controle <- read_csv(df_path) %>% 

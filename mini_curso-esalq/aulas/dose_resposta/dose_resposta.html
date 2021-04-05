@@ -297,7 +297,7 @@ pre code {
 <p>Vamos usar o pacote <code>RCurl</code> para baixar o pacote via GitHub.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RCurl)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixando via GitHub</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_path <span class="ot">&lt;-</span> <span class="fu">getURL</span>(<span class="st">&quot;https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/dose_resposta.csv&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_path <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/maxwelco/workshop-esalq/main/data/dose_resposta.csv&quot;</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lendo via read_csv</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dose <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(df_path)</span>
